@@ -160,3 +160,4 @@ cython_debug/
 .idea/
 pyproject.toml
 poetry.lock
+src/vdud.json
