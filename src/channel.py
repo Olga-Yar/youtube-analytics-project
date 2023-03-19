@@ -2,10 +2,10 @@ import os
 
 from googleapiclient.discovery import build
 
-from helper.youtube_api_manual import youtube, api_key
 import json
 
 api_key: str = os.getenv('YT_API_KEY')
+youtube = build('youtube', 'v3', developerKey=api_key)
 
 
 class Channel:
@@ -37,4 +37,14 @@ class Channel:
         with open(name, 'w', encoding='utf-8') as outfile:
             json.dump(self.print_info(), outfile, indent=2, ensure_ascii=False)
 
+    def __str__(self):
+        return f'{self.title} ({self.url})'     # <название_канала> (<ссылка_на_канал>)
 
+    def __add__(self, other):
+        return self.followers + other.followers
+
+    def __sub__(self, other):
+        return int(self.followers) - int(other.followers)
+
+    def __ge__(self, other):
+        return int(self.followers) >= int(other.followers)
