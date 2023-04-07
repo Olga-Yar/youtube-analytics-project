@@ -33,6 +33,10 @@ class Channel:
         youtube = build('youtube', 'v3', developerKey=api_key)
         return youtube
 
+    # @classmethod
+    # def get_channel(cls, channel_id):
+    #     return cls.get_service().channels().list(id=channel_id, part='snippet,statistics').execute()
+
     def to_json(self, name):
         with open(name, 'w', encoding='utf-8') as outfile:
             json.dump(self.print_info(), outfile, indent=2, ensure_ascii=False)
