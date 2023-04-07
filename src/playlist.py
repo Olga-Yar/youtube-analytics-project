@@ -55,11 +55,18 @@ class PlayList:
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
         return video_ids
 
-
     def show_best_video(self):
         """
         Возвращает ссылку на самое популярное видео из плейлиста (по количеству лайков)
         """
-    pass
+        dict_id = {}
+        for video in self.get_video_ids():
+            video_response = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                   id=video
+                                                   ).execute()
+            like_count: int = video_response['items'][0]['statistics']['likeCount']
+            dict_id[like_count] = video
+        return f'https://youtu.be/{dict_id[sorted(dict_id.keys())[0]]}'
+
 
 
