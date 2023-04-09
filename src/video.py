@@ -15,15 +15,19 @@ class Video:
             self.like_count: int = video_response['items'][0]['statistics']['likeCount']
         except HttpError as e:
             print(e)
-            self.video_title: str = None
+            self.title: str = None
+            self.video_url: str = None
+            self.view_count: int = None
+            self.like_count: int = None
+        except IndexError as e:
+            print(e)
+            self.title: str = None
             self.video_url: str = None
             self.view_count: int = None
             self.like_count: int = None
 
-
-
     def __str__(self):
-        return self.video_title
+        return self.title
 
 
 class PLVideo:
@@ -33,9 +37,9 @@ class PLVideo:
         video_response = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                id=video_id
                                                ).execute()
-        self.video_title: str = video_response['items'][0]['snippet']['title']
+        self.title: str = video_response['items'][0]['snippet']['title']
         self.view_count: int = video_response['items'][0]['statistics']['viewCount']
         self.like_count: int = video_response['items'][0]['statistics']['likeCount']
 
     def __str__(self):
-        return self.video_title
+        return self.title
